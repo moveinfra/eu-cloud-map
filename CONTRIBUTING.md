@@ -38,7 +38,7 @@ CI checks that the JSON is valid and that `README.md` was regenerated.
 | `id` | lowercase, hyphens, unique, never renamed once published (people link to it) |
 | `label` | what the capability is, in plain words |
 | `sources.<cloud>.product` | the source cloud's product name(s), comma-separated; `null` or omitted when it has none |
-| `targets.<provider>.product` | the EU product name, or `No direct equivalent` |
+| `targets.<provider>.product` | the EU product name; `null` when there is no direct equivalent (then `migration` is `not-yet`) |
 | `targets.<provider>.notes` | one short line: how it maps (e.g. "Terraform, size-matched") or what is different |
 | `targets.<provider>.migration` | `automatic`, `assisted` or `not-yet`: see below |
 
@@ -53,7 +53,7 @@ else, ignore it or use your own values in a fork.
 
 ## Adding a provider
 
-Add a key under `targets` for **every** capability (use `No direct equivalent` where needed), add the provider to
+Add a key under `targets` for **every** capability (`product: null` where there is no equivalent), add the provider to
 `TARGETS` in `scripts/build-readme.py`, and mention it in the README intro. Please open an issue first so we can agree
 on the name used as key.
 

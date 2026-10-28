@@ -25,8 +25,8 @@ jobs:
               for t, m in c["targets"].items():
                   if m.get("migration") not in ok:
                       errors.append(f"{c['id']}.{t}: migration must be one of {sorted(ok)}")
-                  if not m.get("product"):
-                      errors.append(f"{c['id']}.{t}: product is empty")
+                  if not m.get("product") and m.get("migration") != "not-yet":
+                      errors.append(f"{c['id']}.{t}: product is empty (only allowed for not-yet)")
           print("\n".join(errors) or f"{len(ids)} capabilities OK")
           sys.exit(1 if errors else 0)
           EOF
