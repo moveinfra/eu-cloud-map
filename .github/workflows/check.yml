@@ -1,0 +1,36 @@
+name: Check
+on:
+  push:
+    branches: [main]
+  pull_request: {}
+
+jobs:
+  data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: JSON is valid and complete
+        run: |
+          python3 - <<'EOF'
+          import json, sys
+          d = json.load(open("data/eu-cloud-map.json"))
+          targets = {"upcloud", "scaleway", "hetzner", "ovhcloud"}
+          ok = {"automatic", "assisted", "not-yet"}
+          ids = [c["id"] for c in d["capabilities"]]
+          errors = [f"duplicate id {i}" for i in set(ids) if ids.count(i) > 1]
+          for c in d["capabilities"]:
+              missing = targets - set(c["targets"])
+              if missing:
+                  errors.append(f"{c['id']}: missing targets {sorted(missing)}")
+              for t, m in c["targets"].items():
+                  if m.get("migration") not in ok:
+                      errors.append(f"{c['id']}.{t}: migration must be one of {sorted(ok)}")
+                  if not m.get("product"):
+                      errors.append(f"{c['id']}.{t}: product is empty")
+          print("\n".join(errors) or f"{len(ids)} capabilities OK")
+          sys.exit(1 if errors else 0)
+          EOF
+      - name: README tables are regenerated
+        run: |
+          python3 scripts/build-readme.py
+          git diff --exit-code README.md || (echo "Run: python3 scripts/build-readme.py" && exit 1)

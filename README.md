@@ -69,8 +69,11 @@ The status describes how the move works with [MoveInfra](https://moveinfra.eu), 
 
 ## Contributing
 
-Corrections and new providers (STACKIT, IONOS, Exoscale, ...) are welcome. Open an issue or a pull request that edits
-`data/eu-cloud-map.json`, then run `python3 scripts/build-readme.py` to refresh the tables above.
-Please link the provider's documentation for any product you add.
+Corrections and new providers (STACKIT, IONOS, Exoscale, ...) are welcome. Edit `data/eu-cloud-map.json`, run
+`python3 scripts/build-readme.py`, and link the provider's documentation. Rules and the data format are in
+[CONTRIBUTING.md](CONTRIBUTING.md); please follow the [code of conduct](CODE_OF_CONDUCT.md).
+
+Using the data elsewhere (a site, a spreadsheet, a fork) is fine under CC BY 4.0: credit "EU Cloud Map by MoveInfra"
+with a link to this repository.
 
 Maintained by [MoveInfra](https://moveinfra.eu), a service that moves company infrastructure from US clouds to EU-owned providers.

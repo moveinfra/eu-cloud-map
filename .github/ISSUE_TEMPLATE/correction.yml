@@ -1,0 +1,30 @@
+name: Correction
+description: A product name, mapping or note is wrong or out of date
+labels: [correction]
+body:
+  - type: input
+    id: capability
+    attributes:
+      label: Capability
+      placeholder: Managed PostgreSQL / MySQL
+    validations:
+      required: true
+  - type: input
+    id: provider
+    attributes:
+      label: Cloud or provider
+      placeholder: Scaleway
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: What is wrong, and what should it say?
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Link to the provider's documentation
+    validations:
+      required: true

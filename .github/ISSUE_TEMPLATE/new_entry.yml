@@ -1,0 +1,28 @@
+name: New provider or capability
+description: Suggest an EU-owned provider (STACKIT, IONOS, Exoscale, …) or a capability to add
+labels: [enhancement]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What to add
+      options: [EU-owned provider, Capability (row)]
+    validations:
+      required: true
+  - type: input
+    id: name
+    attributes:
+      label: Name
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Details
+      description: For a provider, where it is headquartered and who owns it. For a capability, the AWS/GCP/Azure products it covers.
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Link to product or pricing page
