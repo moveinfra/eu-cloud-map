@@ -1,0 +1,540 @@
+{
+  "schema_version": 1,
+  "version": "0.1.0",
+  "maintainer": {
+    "name": "MoveInfra",
+    "url": "https://moveinfra.eu"
+  },
+  "license": "CC-BY-4.0",
+  "repository": "https://github.com/moveinfra/eu-cloud-map",
+  "capabilities": [
+    {
+      "id": "compute",
+      "label": "Virtual machines",
+      "sources": {
+        "aws": {
+          "product": "EC2",
+          "notes": null
+        },
+        "gcp": {
+          "product": "Compute Engine",
+          "notes": null
+        },
+        "azure": {
+          "product": "Virtual Machines",
+          "notes": null
+        },
+        "digitalocean": {
+          "product": "Droplets",
+          "notes": null
+        }
+      },
+      "targets": {
+        "upcloud": {
+          "product": "Cloud Servers",
+          "notes": "Terraform, size-matched",
+          "migration": "automatic"
+        },
+        "scaleway": {
+          "product": "Instances",
+          "notes": "Terraform, size-matched",
+          "migration": "automatic"
+        },
+        "hetzner": {
+          "product": "Cloud Servers",
+          "notes": "Terraform, size-matched",
+          "migration": "automatic"
+        },
+        "ovhcloud": {
+          "product": "Public Cloud Instances",
+          "notes": "Terraform, size-matched",
+          "migration": "automatic"
+        }
+      }
+    },
+    {
+      "id": "managed-postgres",
+      "label": "Managed PostgreSQL / MySQL",
+      "sources": {
+        "aws": {
+          "product": "RDS, Aurora (provisioned)",
+          "notes": null
+        },
+        "gcp": {
+          "product": "Cloud SQL",
+          "notes": null
+        },
+        "azure": {
+          "product": "Azure Database for PostgreSQL / MySQL",
+          "notes": null
+        },
+        "digitalocean": {
+          "product": "Managed Databases",
+          "notes": null
+        }
+      },
+      "targets": {
+        "upcloud": {
+          "product": "Managed PostgreSQL / MySQL",
+          "notes": "Logical replication, then cutover",
+          "migration": "automatic"
+        },
+        "scaleway": {
+          "product": "Managed Database for PostgreSQL / MySQL",
+          "notes": "Logical replication, then cutover",
+          "migration": "automatic"
+        },
+        "hetzner": {
+          "product": "PostgreSQL / MySQL on Cloud Servers",
+          "notes": "Hetzner has no managed database. MoveInfra sets it up on Cloud Servers, then replicates; you or a partner run it afterwards.",
+          "migration": "assisted"
+        },
+        "ovhcloud": {
+          "product": "Managed Databases for PostgreSQL / MySQL",
+          "notes": "Logical replication, then cutover",
+          "migration": "automatic"
+        }
+      }
+    },
+    {
+      "id": "object-storage",
+      "label": "Object storage",
+      "sources": {
+        "aws": {
+          "product": "S3",
+          "notes": null
+        },
+        "gcp": {
+          "product": "Cloud Storage",
+          "notes": null
+        },
+        "azure": {
+          "product": "Blob Storage",
+          "notes": null
+        },
+        "digitalocean": {
+          "product": "Spaces",
+          "notes": null
+        }
+      },
+      "targets": {
+        "upcloud": {
+          "product": "Managed Object Storage",
+          "notes": "rclone mirror with checksums",
+          "migration": "automatic"
+        },
+        "scaleway": {
+          "product": "Object Storage",
+          "notes": "rclone mirror with checksums",
+          "migration": "automatic"
+        },
+        "hetzner": {
+          "product": "Object Storage",
+          "notes": "S3-compatible. rclone mirror with checksums",
+          "migration": "automatic"
+        },
+        "ovhcloud": {
+          "product": "Object Storage (S3 API)",
+          "notes": "rclone mirror with checksums",
+          "migration": "automatic"
+        }
+      }
+    },
+    {
+      "id": "load-balancer",
+      "label": "Load balancers",
+      "sources": {
+        "aws": {
+          "product": "Elastic Load Balancing (ALB, NLB)",
+          "notes": null
+        },
+        "gcp": {
+          "product": "Cloud Load Balancing",
+          "notes": null
+        },
+        "azure": {
+          "product": "Load Balancer, Application Gateway",
+          "notes": null
+        },
+        "digitalocean": {
+          "product": "Load Balancers",
+          "notes": null
+        }
+      },
+      "targets": {
+        "upcloud": {
+          "product": "Managed Load Balancer",
+          "notes": "Terraform",
+          "migration": "automatic"
+        },
+        "scaleway": {
+          "product": "Load Balancer",
+          "notes": "Terraform",
+          "migration": "automatic"
+        },
+        "hetzner": {
+          "product": "Load Balancer",
+          "notes": "Terraform",
+          "migration": "automatic"
+        },
+        "ovhcloud": {
+          "product": "Public Cloud Load Balancer",
+          "notes": "Terraform",
+          "migration": "automatic"
+        }
+      }
+    },
+    {
+      "id": "networking",
+      "label": "Private networks, firewalls",
+      "sources": {
+        "aws": {
+          "product": "VPC, security groups",
+          "notes": null
+        },
+        "gcp": {
+          "product": "VPC, firewall rules",
+          "notes": null
+        },
+        "azure": {
+          "product": "VNet, network security groups",
+          "notes": null
+        },
+        "digitalocean": {
+          "product": "VPC, Cloud Firewalls",
+          "notes": null
+        }
+      },
+      "targets": {
+        "upcloud": {
+          "product": "SDN private networks, firewall rules",
+          "notes": "Terraform",
+          "migration": "automatic"
+        },
+        "scaleway": {
+          "product": "VPC, Private Networks, security groups",
+          "notes": "Terraform",
+          "migration": "automatic"
+        },
+        "hetzner": {
+          "product": "Networks, Firewalls",
+          "notes": "Terraform",
+          "migration": "automatic"
+        },
+        "ovhcloud": {
+          "product": "vRack private networks, security groups",
+          "notes": "Terraform",
+          "migration": "automatic"
+        }
+      }
+    },
+    {
+      "id": "kubernetes",
+      "label": "Kubernetes",
+      "sources": {
+        "aws": {
+          "product": "EKS",
+          "notes": null
+        },
+        "gcp": {
+          "product": "GKE",
+          "notes": null
+        },
+        "azure": {
+          "product": "AKS",
+          "notes": null
+        },
+        "digitalocean": {
+          "product": "DigitalOcean Kubernetes (DOKS)",
+          "notes": null
+        }
+      },
+      "targets": {
+        "upcloud": {
+          "product": "Managed Kubernetes",
+          "notes": "Terraform + Velero",
+          "migration": "automatic"
+        },
+        "scaleway": {
+          "product": "Kubernetes Kapsule",
+          "notes": "Terraform + Velero",
+          "migration": "automatic"
+        },
+        "hetzner": {
+          "product": "Self-managed Kubernetes on Cloud Servers",
+          "notes": "Hetzner has no managed Kubernetes. MoveInfra sets up a cluster on Cloud Servers, then moves workloads with Velero; you or a partner run it afterwards.",
+          "migration": "assisted"
+        },
+        "ovhcloud": {
+          "product": "Managed Kubernetes Service",
+          "notes": "Terraform + Velero",
+          "migration": "automatic"
+        }
+      }
+    },
+    {
+      "id": "redis",
+      "label": "Redis-compatible cache",
+      "sources": {
+        "aws": {
+          "product": "ElastiCache",
+          "notes": null
+        },
+        "gcp": {
+          "product": "Memorystore",
+          "notes": null
+        },
+        "azure": {
+          "product": "Azure Cache for Redis",
+          "notes": null
+        },
+        "digitalocean": {
+          "product": "Managed Caching",
+          "notes": null
+        }
+      },
+      "targets": {
+        "upcloud": {
+          "product": "Managed Valkey",
+          "notes": "Valkey is Redis-compatible. Fresh cache or snapshot restore",
+          "migration": "automatic"
+        },
+        "scaleway": {
+          "product": "Managed Redis",
+          "notes": "Fresh cache or snapshot restore",
+          "migration": "automatic"
+        },
+        "hetzner": {
+          "product": "Valkey on Cloud Servers",
+          "notes": "Hetzner has no managed cache. MoveInfra sets it up on Cloud Servers.",
+          "migration": "assisted"
+        },
+        "ovhcloud": {
+          "product": "Managed Databases for Caching",
+          "notes": "Fresh cache or snapshot restore",
+          "migration": "automatic"
+        }
+      }
+    },
+    {
+      "id": "queues",
+      "label": "Queues and messaging",
+      "sources": {
+        "aws": {
+          "product": "SQS, SNS",
+          "notes": null
+        },
+        "gcp": {
+          "product": "Pub/Sub",
+          "notes": null
+        },
+        "azure": {
+          "product": "Service Bus",
+          "notes": null
+        },
+        "digitalocean": {
+          "product": null,
+          "notes": "No first-party queue service listed"
+        }
+      },
+      "targets": {
+        "upcloud": {
+          "product": "NATS or RabbitMQ on servers",
+          "notes": "Rebuild, MoveInfra helps",
+          "migration": "assisted"
+        },
+        "scaleway": {
+          "product": "Queues and Topics (SQS/SNS-compatible)",
+          "notes": "Endpoint swap, MoveInfra helps",
+          "migration": "assisted"
+        },
+        "hetzner": {
+          "product": "NATS or RabbitMQ on servers",
+          "notes": "Rebuild, MoveInfra helps",
+          "migration": "assisted"
+        },
+        "ovhcloud": {
+          "product": "Managed Kafka or RabbitMQ on servers",
+          "notes": "Rebuild, MoveInfra helps",
+          "migration": "assisted"
+        }
+      }
+    },
+    {
+      "id": "functions",
+      "label": "Serverless functions",
+      "sources": {
+        "aws": {
+          "product": "Lambda",
+          "notes": null
+        },
+        "gcp": {
+          "product": "Cloud Functions, Cloud Run",
+          "notes": null
+        },
+        "azure": {
+          "product": "Azure Functions",
+          "notes": null
+        },
+        "digitalocean": {
+          "product": "Functions",
+          "notes": null
+        }
+      },
+      "targets": {
+        "upcloud": {
+          "product": "Containers on Kubernetes",
+          "notes": "Repackage, MoveInfra helps",
+          "migration": "assisted"
+        },
+        "scaleway": {
+          "product": "Serverless Functions / Containers",
+          "notes": "Repackage, MoveInfra helps",
+          "migration": "assisted"
+        },
+        "hetzner": {
+          "product": "Containers on servers",
+          "notes": "Repackage, MoveInfra helps",
+          "migration": "assisted"
+        },
+        "ovhcloud": {
+          "product": "Containers on Kubernetes",
+          "notes": "Repackage, MoveInfra helps",
+          "migration": "assisted"
+        }
+      }
+    },
+    {
+      "id": "dns",
+      "label": "DNS",
+      "sources": {
+        "aws": {
+          "product": "Route 53",
+          "notes": null
+        },
+        "gcp": {
+          "product": "Cloud DNS",
+          "notes": null
+        },
+        "azure": {
+          "product": "Azure DNS",
+          "notes": null
+        },
+        "digitalocean": {
+          "product": "DNS",
+          "notes": null
+        }
+      },
+      "targets": {
+        "upcloud": {
+          "product": "EU DNS provider of your choice",
+          "notes": "Not an UpCloud product. Zone export and import",
+          "migration": "assisted"
+        },
+        "scaleway": {
+          "product": "Domains and DNS",
+          "notes": "Zone export and import",
+          "migration": "assisted"
+        },
+        "hetzner": {
+          "product": "Hetzner DNS",
+          "notes": "Zone export and import",
+          "migration": "assisted"
+        },
+        "ovhcloud": {
+          "product": "OVHcloud DNS",
+          "notes": "Zone export and import",
+          "migration": "assisted"
+        }
+      }
+    },
+    {
+      "id": "nosql",
+      "label": "Proprietary NoSQL",
+      "sources": {
+        "aws": {
+          "product": "DynamoDB",
+          "notes": null
+        },
+        "gcp": {
+          "product": "Firestore, Bigtable",
+          "notes": null
+        },
+        "azure": {
+          "product": "Cosmos DB",
+          "notes": null
+        },
+        "digitalocean": {
+          "product": null,
+          "notes": "No proprietary NoSQL service listed"
+        }
+      },
+      "targets": {
+        "upcloud": {
+          "product": null,
+          "notes": "No direct equivalent. Redesign needed",
+          "migration": "not-yet"
+        },
+        "scaleway": {
+          "product": null,
+          "notes": "No direct equivalent. Redesign needed",
+          "migration": "not-yet"
+        },
+        "hetzner": {
+          "product": null,
+          "notes": "No direct equivalent. Redesign needed",
+          "migration": "not-yet"
+        },
+        "ovhcloud": {
+          "product": null,
+          "notes": "No direct equivalent. Redesign needed",
+          "migration": "not-yet"
+        }
+      }
+    },
+    {
+      "id": "warehouse",
+      "label": "Data warehouse",
+      "sources": {
+        "aws": {
+          "product": "Redshift",
+          "notes": null
+        },
+        "gcp": {
+          "product": "BigQuery",
+          "notes": null
+        },
+        "azure": {
+          "product": "Synapse Analytics",
+          "notes": null
+        },
+        "digitalocean": {
+          "product": null,
+          "notes": "No data warehouse service listed"
+        }
+      },
+      "targets": {
+        "upcloud": {
+          "product": null,
+          "notes": "No direct equivalent. Out of scope for MoveInfra today",
+          "migration": "not-yet"
+        },
+        "scaleway": {
+          "product": null,
+          "notes": "No direct equivalent. Out of scope for MoveInfra today",
+          "migration": "not-yet"
+        },
+        "hetzner": {
+          "product": null,
+          "notes": "No direct equivalent. Out of scope for MoveInfra today",
+          "migration": "not-yet"
+        },
+        "ovhcloud": {
+          "product": null,
+          "notes": "No direct equivalent. Out of scope for MoveInfra today",
+          "migration": "not-yet"
+        }
+      }
+    }
+  ]
+}
